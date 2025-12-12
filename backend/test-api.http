@@ -1,0 +1,296 @@
+
+
+############################################
+# AUTH APIs
+############################################
+
+### Register User
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Ram",
+  "email": "ram21@gmail.com",
+  "password": "Pass153"
+}
+
+### Login User
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ram21@gmail.com",
+  "password": "Pass153"
+}
+
+### Example Protected Request (User/Admin)
+GET http://localhost:5000/api/auth/profile
+Authorization: Bearer {{user_token}}
+
+
+############################################
+# COURT APIs
+############################################
+
+### Create Court (ADMIN)
+POST http://localhost:5000/api/courts
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+  
+{
+  "name": "Court B",
+  "type": "badminton",
+  "isActive": true
+}
+
+### Get All Courts
+GET http://localhost:5000/api/courts
+
+### Update Court (ADMIN)
+PUT http://localhost:5000/api/courts/admin/{{court_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Court C",
+  "type": "badminton",
+  "isActive": true
+}
+
+
+
+############################################
+# COACH APIs
+############################################
+
+### Add Coach (ADMIN)
+POST http://localhost:5000/api/coaches
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Dravid",
+  "expertise": "badminton",
+  "fee": 230,
+  "availability": [
+    {
+      "day": "Monday",
+      "startTime": "9:30",
+      "endTime": "16:00"
+    },
+    {
+      "day": "Wednesday",
+      "startTime": "12:00",
+      "endTime": "18:00"
+    }
+  ]
+}
+
+### Update Coach (ADMIN)
+PUT http://localhost:5000/api/coaches/{{coach_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "availability": [
+    {
+      "day": "Monday",
+      "startTime": "14:30",
+      "endTime": "17:00"
+    },
+    {
+      "day": "Tuesday",
+      "startTime": "14:30",
+      "endTime": "17:00"
+    },
+    {
+      "day": "Wednesday",
+      "startTime": "14:30",
+      "endTime": "17:00"
+    },
+    {
+      "day": "Thursday",
+      "startTime": "14:30",
+      "endTime": "17:00"
+    },
+    {
+      "day": "Friday",
+      "startTime": "14:30",
+      "endTime": "17:00"
+    },
+    {
+      "day": "Saturday",
+      "startTime": "10:30",
+      "endTime": "16:00"
+    },
+    {
+      "day": "Sunday",
+      "startTime": "10:00",
+      "endTime": "16:00"
+    }
+  ]
+}
+
+### Get All Coaches
+GET http://localhost:5000/api/coaches
+Authorization: Bearer {{admin_token}}
+
+
+############################################
+# EQUIPMENT APIs
+############################################
+
+### Add Equipment (ADMIN)
+POST http://localhost:5000/api/equipment
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Racket", 
+  "total": 10,
+  "price": 899
+}
+
+### Add Equipment (ADMIN)
+POST http://localhost:5000/api/equipment
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Grip Tape",  
+  "total": 10,
+  "price": 100
+}
+
+
+### Get Equipment List
+GET http://localhost:5000/api/equipment
+
+
+############################################
+# PRICING-RULES (ADMIN)
+############################################
+
+### Add Pricing Rule
+POST http://localhost:5000/api/rules
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "ruleName": "Peak Hour Rule",
+  "courtType": "badminton",
+  "dayType": "weekend",
+  "startHour": 17,
+  "endHour": 22,
+  "extraCharge": 50,
+  "isActive": true
+}
+
+### Get All Pricing Rules
+GET http://localhost:5000/api/rules
+Authorization: Bearer {{admin_token}}
+
+### Update Pricing Rule
+PUT http://localhost:5000/api/rules/{{price_rule_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "isActive": true
+}
+
+
+############################################
+# PRICE CALCULATION
+############################################
+
+### Calculate Price
+POST http://localhost:5000/api/pricing/calculate
+Content-Type: application/json
+
+{
+  "courtId": "{{court_id}}",
+  "coachId": "{{coach_id}}",
+  "equipment": [
+    { "item": "{{equipment_id}}", "qty": 2 }
+  ],
+  "date": "2025-01-25",
+  "startTime": "15:00",
+  "endTime": "16:00"
+}
+
+
+############################################
+# BOOKING APIs
+############################################
+
+### Create Booking
+POST http://localhost:5000/api/bookings
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+  "court": "{{court_id}}",
+  "date": "2025-01-25",
+  "startTime": "14:00",
+  "endTime": "15:00",
+  "equipment": [
+    { "item": "{{equipment_id}}", "qty": 1 }
+  ],
+  "coach": "{{coach_id}}"
+}
+
+### Get My Bookings
+GET http://localhost:5000/api/bookings/me
+Authorization: Bearer {{user_token}}
+
+### Modify Booking
+PUT http://localhost:5000/api/bookings/update/{{booking_id}}
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+  "court": "{{court_id}}",
+  "date": "2025-12-26",
+  "startTime": "17:00",
+  "endTime": "18:00"
+}
+
+### Cancel Booking
+PUT http://localhost:5000/api/bookings/cancel/{{booking_id}}
+Authorization: Bearer {{user_token}}
+
+
+############################################
+# WAITLIST APIs
+############################################
+
+### Join Waitlist
+POST http://localhost:5000/api/bookings/waitlist
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+  "court": "{{waitlisted_court_id}}",
+  "date": "2025-01-25",
+  "startTime": "14:00",
+  "endTime": "15:00"
+}
+
+
+############################################
+# USER DASHBOARD
+############################################
+
+### User Dashboard (Upcoming, Past, Cancelled, Waitlist)
+GET http://localhost:5000/api/dashboard
+Authorization: Bearer {{user_token}}
+
+
+############################################
+# ADMIN DASHBOARD
+############################################
+
+### Admin Dashboard (Stats, All Bookings, Waitlist)
+GET http://localhost:5000/api/admin/dashboard
+Authorization: Bearer {{admin_token}}

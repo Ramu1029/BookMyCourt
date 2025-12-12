@@ -1,0 +1,16 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "BASE_URL": "http://localhost:5000",
+      "API_KEY": "12345",
+      "admin_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Mzk1YjdiYjI5YzNlNTJhZGQ3NWFlYyIsImlhdCI6MTc2NTM3MDYzM30.bpNvEo_bnZjpP4-SHJwgeLwnJElzHVSN_qDMLxhuAYE",
+      "user_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5M2E3YjJiZGJjYzZhODY2MmEwMmI1NyIsImlhdCI6MTc2NTQ0MDM1NH0.45X-wzke0-W-C_i31EbwsCF_4MiYfcA_awW-ikCS7Fk",
+      "court_id": "693a7bdfdbcc6a8662a02b5f",
+      "coach_id": "693a737bdbcc6a8662a02b4c",
+      "price_rule_id": "693a90f265d81de296611cbb",
+      "equipment_id": "693a829ff7813837bf46e37d",
+      "booking_id": "693a9d3c65d81de296611d21",
+      "waitlisted_court_id": "693a7bd5dbcc6a8662a02b5c"
+    }
+  }
+}
